@@ -1,11 +1,10 @@
 <template>
-<h1>Hello World</h1>
+  <div>
+    <h1>Hello World</h1>
+  </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: "index"
-}
+<script lang="ts" setup>
 </script>
 
 <style scoped>

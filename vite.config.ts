@@ -26,10 +26,6 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'src')
       },
       {
-        find: 'node_modules',
-        replacement: path.resolve(__dirname, '../node_modules')
-      },
-      {
         find: /~(.+)/,
         replacement: path.join(process.cwd(), 'node_modules/$1'),
       },

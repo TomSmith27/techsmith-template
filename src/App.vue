@@ -1,94 +1,48 @@
 <template>
-  <div>
-    <div style="margin: 1rem 0">
-      <PiniaLogo />
-    </div>
+  <div id="app">
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="#">NavBar</b-navbar-brand>
 
-    <h2>Hello {{ user.name }}</h2>
-<router-view />
-    <form @submit.prevent="addItemToCart" data-testid="add-items">
-      <input type="text" v-model="itemName" />
-      <button>Add</button>
-    </form>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-    <form @submit.prevent="buy">
-      <ul data-testid="items">
-        <li v-for="item in cart.items" :key="item.name">
-          {{ item.name }} ({{ item.amount }})
-          <button @click="cart.removeItem(item.name)" type="button">X</button>
-        </li>
-      </ul>
-<b-button>Buy</b-button>
-      <button :disabled="!user.name">Buy</button>
-      <button
-        :disabled="!cart.items.length"
-        @click="clearCart"
-        type="button"
-        data-testid="clear"
-      >
-        Clear the cart
-      </button>
-    </form>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item href="#">Link</b-nav-item>
+          <b-nav-item href="#" disabled>Disabled</b-nav-item>
+        </b-navbar-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-form>
+            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+          </b-nav-form>
+
+          <b-nav-item-dropdown text="Lang" right>
+            <b-dropdown-item href="#">EN</b-dropdown-item>
+            <b-dropdown-item href="#">ES</b-dropdown-item>
+            <b-dropdown-item href="#">RU</b-dropdown-item>
+            <b-dropdown-item href="#">FA</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              <em>User</em>
+            </template>
+            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+    <main class="forge-layout" id="main-content">
+      <div class="container p-2">
+        <router-view />
+      </div>
+    </main>
   </div>
 </template>
 
-<script lang="ts">
-import PiniaLogo from './components/PiniaLogo.vue'
-
-import { defineComponent, ref } from 'vue'
-import { useUserStore } from './stores/user'
-import { useCartStore } from './stores/cart'
-
-export default defineComponent({
-  components: { PiniaLogo },
-
-  setup() {
-    const user = useUserStore()
-    const cart = useCartStore()
-
-    const itemName = ref('')
-
-    function addItemToCart() {
-      if (!itemName.value) return
-      cart.addItem(itemName.value)
-      itemName.value = ''
-    }
-
-    function clearCart() {
-      if (window.confirm('Are you sure you want to clear the cart?')) {
-        cart.rawItems = []
-      }
-    }
-
-    async function buy() {
-      const n = await cart.purchaseItems()
-
-      console.log(`Bought ${n} items`)
-
-      cart.rawItems = []
-    }
-
-    return {
-      itemName,
-      addItemToCart,
-      cart,
-
-      user,
-      buy,
-      clearCart,
-    }
-  },
-})
+<script lang="ts" setup>
 </script>
-
-<style scoped>
-img {
-  width: 200px;
-}
-
-button,
-input {
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-</style>
