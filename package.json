@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@3squared/forge-ui": "^1.1.2",
+    "firebase": "^9.10.0",
     "pinia": "^2.0.22",
     "vue": "^2.7.10",
     "vue-demi": "^0.13.11",
