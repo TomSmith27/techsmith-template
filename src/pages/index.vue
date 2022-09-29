@@ -2,7 +2,7 @@
 <h1>Hello World</h1>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: "index"
 }

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import { createPinia, PiniaVuePlugin } from 'pinia'
-import routes from '~pages'
+import routes from 'pages-generated';
 import VueRouter from "vue-router";
 const pinia = createPinia()
 
